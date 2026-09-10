@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тест: Какой тип блога тебе подходит? — Гузель Усманова</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #0a0910;
+    --card:    #141019;
+    --yellow:  #e8578d;
+    --yellow2: #ff7aad;
+    --white:   #f7f2f4;
+    --grey:    #a89aa4;
+    --border:  rgba(232,87,141,0.18);
+    --border2: rgba(232,87,141,0.4);
+    --dark-on-accent: #180810;
+    --rad:     16px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'Manrope',sans-serif;
+    background:var(--bg);
+    color:var(--white);
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  body::after {
+    content:'';
+    position:fixed;
+    bottom:-150px; right:-150px;
+    width:480px; height:480px;
+    background:radial-gradient(circle, rgba(232,87,141,0.18) 0%, transparent 65%);
+    pointer-events:none; z-index:0;
+  }
+  .container { max-width:640px; margin:0 auto; padding:0 20px 60px; position:relative; z-index:1; }
+
+  /* HEADER */
+  .header { padding:48px 0 36px; text-align:center; animation:fadeUp 0.7s ease both; }
+  .handle { font-size:11px; font-weight:700; letter-spacing:3px; color:var(--grey); text-transform:uppercase; margin-bottom:20px; }
+  .header h1 { font-family:'Unbounded',sans-serif; font-weight:800; font-size:clamp(20px,5.5vw,32px); line-height:1.2; color:var(--yellow); text-transform:uppercase; margin-bottom:14px; letter-spacing:0.5px; }
+  .header-sub { font-size:14px; color:var(--grey); line-height:1.7; max-width:460px; margin:0 auto 28px; }
+  .stats { display:flex; justify-content:center; border:1px solid var(--border); border-radius:var(--rad); overflow:hidden; max-width:340px; margin:0 auto; }
+  .stat { flex:1; padding:14px 10px; text-align:center; border-right:1px solid var(--border); }
+  .stat:last-child { border-right:none; }
+  .stat-n { display:block; font-family:'Unbounded',sans-serif; font-weight:800; font-size:20px; color:var(--yellow); }
+  .stat-l { display:block; font-size:10px; color:var(--grey); text-transform:uppercase; letter-spacing:1.5px; margin-top:2px; }
+
+  /* CARD BASE */
+  .card {
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--rad);
+    padding:32px 28px;
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--yellow); opacity:0.55; }
+
+  /* START */
+  .start-card { text-align:center; padding:48px 32px; }
+  .start-card::before { opacity:1; }
+  .start-title { font-family:'Unbounded',sans-serif; font-weight:700; font-size:17px; color:var(--white); text-transform:uppercase; margin-bottom:12px; letter-spacing:0.5px; }
+  .start-desc { font-size:14px; color:var(--grey); line-height:1.7; margin-bottom:32px; }
+
+  /* PROGRESS */
+  .progress-wrap { margin-bottom:20px; animation:fadeUp 0.5s ease both; }
+  .progress-top { display:flex; justify-content:space-between; margin-bottom:8px; }
+  .progress-label { font-size:10px; font-weight:800; color:var(--grey); text-transform:uppercase; letter-spacing:1.5px; }
+  .progress-pct { font-family:'Unbounded',sans-serif; font-weight:700; font-size:12px; color:var(--yellow); }
+  .progress-bar { height:2px; background:rgba(255,255,255,0.07); border-radius:99px; overflow:hidden; }
+  .progress-fill { height:100%; background:var(--yellow); border-radius:99px; transition:width 0.4s cubic-bezier(0.4,0,0.2,1); box-shadow:0 0 6px rgba(232,87,141,0.5); }
+
+  /* QUESTION */
+  .q-wrap { margin-bottom:14px; animation:fadeUp 0.4s ease both; }
+  .q-num { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--yellow); margin-bottom:10px; opacity:0.75; }
+  .q-text { font-family:'Unbounded',sans-serif; font-weight:700; font-size:clamp(15px,3.5vw,19px); color:var(--white); text-transform:uppercase; line-height:1.35; margin-bottom:22px; letter-spacing:0.3px; }
+  .options { display:flex; flex-direction:column; gap:7px; }
+  .option { display:flex; align-items:flex-start; gap:12px; padding:13px 15px; border:1px solid rgba(255,255,255,0.07); border-radius:var(--rad); cursor:pointer; transition:all 0.2s ease; background:rgba(255,255,255,0.02); user-select:none; }
+  .option:hover { border-color:rgba(232,87,141,0.35); background:rgba(232,87,141,0.04); }
+  .option.selected { border-color:var(--yellow); background:rgba(232,87,141,0.08); }
+  .opt-box { width:17px; height:17px; border:1.5px solid rgba(255,255,255,0.2); border-radius:2px; flex-shrink:0; margin-top:1px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+  .option.selected .opt-box { background:var(--yellow); border-color:var(--yellow); }
+  .option.selected .opt-box::after { content:''; width:4px; height:8px; border:2px solid var(--dark-on-accent); border-top:none; border-left:none; transform:rotate(45deg) translateY(-1px); display:block; }
+  .opt-text { font-size:13px; line-height:1.55; color:var(--grey); font-weight:500; transition:color 0.2s; }
+  .option.selected .opt-text, .option:hover .opt-text { color:var(--white); }
+
+  /* BUTTONS */
+  .btn-row { display:flex; gap:10px; animation:fadeUp 0.5s 0.1s ease both; }
+  .btn { padding:14px 22px; border-radius:999px; border:none; cursor:pointer; font-family:'Manrope',sans-serif; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; transition:all 0.2s ease; }
+  .btn-primary { flex:1; background:var(--yellow); color:var(--dark-on-accent); }
+  .btn-primary:hover:not(:disabled) { background:var(--yellow2); transform:translateY(-1px); }
+  .btn-primary:disabled { opacity:0.3; cursor:not-allowed; }
+  .btn-back { background:rgba(255,255,255,0.04); color:var(--grey); border:1px solid rgba(255,255,255,0.1); flex:0 0 auto; font-size:16px; letter-spacing:0; padding:14px 18px; }
+  .btn-back:hover { background:rgba(255,255,255,0.09); color:var(--white); }
+
+  /* RESULT HEADER */
+  .res-hdr { margin-bottom:14px; animation:fadeUp 0.5s ease both; }
+  .res-tag { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--yellow); margin-bottom:12px; opacity:0.75; }
+  .res-title { font-family:'Unbounded',sans-serif; font-weight:800; font-size:clamp(17px,4vw,22px); color:var(--yellow); text-transform:uppercase; line-height:1.25; margin-bottom:10px; letter-spacing:0.3px; }
+  .res-sub { font-size:13px; color:var(--grey); line-height:1.7; }
+
+  /* FORMATS */
+  .formats { display:flex; flex-direction:column; gap:10px; margin-bottom:14px; }
+  .fmt { animation:fadeUp 0.5s ease both; }
+  .fmt:nth-child(2) { animation-delay:0.08s; }
+  .fmt:nth-child(3) { animation-delay:0.16s; }
+  .fmt-top { display:flex; align-items:center; gap:10px; margin-bottom:9px; }
+  .fmt-n { font-family:'Unbounded',sans-serif; font-weight:700; font-size:12px; color:var(--yellow); background:rgba(232,87,141,0.1); border:1px solid rgba(232,87,141,0.22); width:26px; height:26px; border-radius:2px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .fmt-name { font-family:'Unbounded',sans-serif; font-weight:700; font-size:12px; color:var(--yellow); text-transform:uppercase; letter-spacing:0.5px; }
+  .fmt-desc { font-size:13px; color:var(--grey); line-height:1.6; margin-bottom:9px; }
+  .fmt-ex { list-style:none; margin-bottom:12px; border-left:2px solid rgba(232,87,141,0.28); padding-left:11px; }
+  .fmt-ex li { font-size:12px; color:#8f838d; padding:3px 0; line-height:1.5; }
+  .fmt-bot { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:7px; padding-top:11px; border-top:1px solid rgba(255,255,255,0.05); }
+  .fmt-price { font-size:12px; font-weight:700; color:var(--grey); letter-spacing:0.5px; }
+  .fmt-income { font-size:12px; font-weight:800; color:var(--yellow); font-family:'Unbounded',sans-serif; }
+
+  /* CTA */
+  .cta { animation:fadeUp 0.5s 0.25s ease both; }
+  .cta::before { opacity:1; background:linear-gradient(90deg, var(--yellow), var(--yellow2), var(--yellow)); height:3px; }
+  .cta-label { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--yellow); margin-bottom:12px; opacity:0.75; }
+  .cta-title { font-family:'Unbounded',sans-serif; font-weight:800; font-size:clamp(17px,4vw,22px); color:var(--white); text-transform:uppercase; line-height:1.25; margin-bottom:18px; letter-spacing:0.3px; }
+  .cta-title span { color:var(--yellow); }
+  .cta-list { list-style:none; margin-bottom:20px; }
+  .cta-list li { font-size:13px; color:var(--grey); padding:6px 0 6px 18px; position:relative; line-height:1.55; border-bottom:1px solid rgba(255,255,255,0.04); }
+  .cta-list li:last-child { border-bottom:none; }
+  .cta-list li::before { content:''; position:absolute; left:0; top:13px; width:7px; height:2px; background:var(--yellow); }
+  .price-row { display:flex; align-items:baseline; gap:12px; margin-bottom:18px; }
+  .price-new { font-family:'Unbounded',sans-serif; font-weight:800; font-size:30px; color:var(--yellow); }
+  .price-old { font-size:15px; color:#5c525c; text-decoration:line-through; }
+  .price-badge { font-size:11px; font-weight:800; color:var(--dark-on-accent); background:var(--yellow); padding:3px 7px; border-radius:2px; letter-spacing:0.5px; }
+  .spots { display:flex; align-items:center; gap:7px; margin-bottom:18px; font-size:11px; font-weight:800; color:#c04a2a; text-transform:uppercase; letter-spacing:1.5px; }
+  .spots-dot { width:6px; height:6px; background:#c04a2a; border-radius:50%; animation:blink 1.4s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+  .btn-cta { display:block; width:100%; padding:17px 22px; background:var(--yellow); color:var(--dark-on-accent); border:none; border-radius:999px; font-family:'Unbounded',sans-serif; font-size:13px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition:all 0.2s ease; text-decoration:none; text-align:center; margin-bottom:12px; }
+  .btn-cta:hover { background:var(--yellow2); transform:translateY(-2px); box-shadow:0 8px 24px rgba(232,87,141,0.22); }
+  .cta-note { font-size:12px; color:#6b606a; text-align:center; line-height:1.6; }
+  .cta-note strong { color:var(--grey); }
+
+  .reset-wrap { text-align:center; margin-top:18px; animation:fadeUp 0.5s 0.35s ease both; }
+  .btn-reset { background:none; border:1px solid rgba(255,255,255,0.09); color:var(--grey); font-family:'Manrope',sans-serif; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:10px 18px; border-radius:999px; cursor:pointer; transition:all 0.2s; }
+  .btn-reset:hover { border-color:rgba(255,255,255,0.22); color:var(--white); }
+
+  .footer { text-align:center; padding-top:28px; font-size:10px; color:#4a424c; letter-spacing:1.5px; text-transform:uppercase; }
+
+  .screen { display:none; }
+  .screen.active { display:block; animation:fadeUp 0.4s ease both; }
+
+  /* ── LEAD FORM ── */
+  .screen#screen-form { }
+  .form-card {
+    background:var(--card);border:1px solid var(--bdr2);
+    border-radius:var(--rad);padding:32px 24px;
+    position:relative;overflow:hidden;
+    animation:fadeUp 0.5s ease both;
+  }
+  .form-card::before {
+    content:'';position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--yellow),var(--yellow2),var(--yellow));
+  }
+  .form-tag { font-size:10px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--yellow);opacity:.75;margin-bottom:12px; }
+  .form-title { font-family:'Unbounded',sans-serif; font-weight:800;font-size:clamp(17px,4vw,22px);color:var(--white);text-transform:uppercase;line-height:1.25;margin-bottom:8px;letter-spacing:.3px; }
+  .form-sub { font-size:13px;color:var(--grey);line-height:1.65;margin-bottom:24px; }
+  .form-group { display:flex;flex-direction:column;gap:10px;margin-bottom:20px; }
+  .form-input {
+    width:100%;padding:14px 16px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:var(--rad);
+    color:var(--white);font-family:'Manrope',sans-serif;font-size:14px;
+    outline:none;transition:border-color .2s;
+  }
+  .form-input::placeholder { color:var(--grey);opacity:.6; }
+  .form-input:focus { border-color:rgba(232,87,141,.45); }
+  .form-input.err { border-color:#e05555; }
+  .checkbox-wrap {
+    display:flex;align-items:flex-start;gap:12px;
+    padding:14px 16px;
+    background:rgba(255,255,255,.02);
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:var(--rad);cursor:pointer;
+  }
+  .checkbox-wrap input[type=checkbox] { display:none; }
+  .cb-box {
+    width:18px;height:18px;flex-shrink:0;margin-top:1px;
+    border:1.5px solid rgba(255,255,255,.22);border-radius:3px;
+    display:flex;align-items:center;justify-content:center;
+    transition:all .2s;background:transparent;
+  }
+  .cb-box.checked { background:var(--yellow);border-color:var(--yellow); }
+  .cb-box.checked::after { content:'';width:4px;height:8px;border:2px solid var(--dark-on-accent);border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);display:block; }
+  .cb-text { font-size:12px;color:var(--grey);line-height:1.55; }
+  .cb-text a { color:var(--yellow);text-decoration:underline; }
+  .form-err { font-size:12px;color:#e05555;margin-top:-6px;margin-bottom:4px;display:none; }
+  .form-err.show { display:block; }
+  .form-success {
+    text-align:center;padding:24px;
+    animation:fadeUp .4s ease both;
+  }
+  .form-success-ico { font-size:48px;margin-bottom:12px; }
+  .form-success-t { font-family:'Unbounded',sans-serif; font-weight:800;font-size:18px;color:var(--yellow);text-transform:uppercase;margin-bottom:8px; }
+  .form-success-d { font-size:13px;color:var(--grey);line-height:1.65; }
+  .skip-link { text-align:center;margin-top:14px; }
+  .skip-btn { background:none;border:none;color:var(--grey);font-family:'Manrope',sans-serif;font-size:12px;cursor:pointer;text-decoration:underline;opacity:.6; }
+  .skip-btn:hover { opacity:1;color:var(--white); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+  @media(max-width:480px){
+    .card,.start-card{ padding:22px 18px; }
+    .btn-row{ flex-direction:column; }
+    .btn-back{ flex:1; text-align:center; }
+  }
+
+  .snap-list { list-style:none; margin:18px 0 0; }
+  .snap-list li { font-size:13px; color:var(--grey); padding:8px 0 8px 18px; position:relative; line-height:1.55; border-bottom:1px solid rgba(255,255,255,0.05); }
+  .snap-list li:last-child { border-bottom:none; }
+  .snap-list li::before { content:''; position:absolute; left:0; top:15px; width:7px; height:2px; background:var(--yellow); }
+  .snap-label { font-size:12px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--grey); margin:22px 0 8px; }
+  .next-steps { display:flex; flex-direction:column; gap:10px; margin-top:6px; }
+</style>
+<body>
+<div class="container">
+
+  <div style="padding-top:20px;text-align:center;">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--grey);text-decoration:none;">← Назад на сайт Гузель</a>
+  </div>
+
+  <!-- START -->
+  <div class="screen active" id="screen-start">
+    <div class="header">
+      <div class="handle">@guzellusmanova</div>
+      <h1>Какой тип блога тебе подходит?</h1>
+      <p class="header-sub">Узнай за 2 минуты — лайф, экспертный или смешанный формат. 12 вопросов, никакой воды.</p>
+      <div class="stats">
+        <div class="stat"><span class="stat-n">12</span><span class="stat-l">вопросов</span></div>
+        <div class="stat"><span class="stat-n">2 мин</span><span class="stat-l">времени</span></div>
+        <div class="stat"><span class="stat-n">3</span><span class="stat-l">формата</span></div>
+      </div>
+    </div>
+    <div class="card start-card">
+      <div class="start-title">Узнай свой формат за 2 минуты</div>
+      <p class="start-desc">Отвечай честно, как первое пришло в голову — не думай, какой ответ «правильный»</p>
+      <button class="btn btn-primary" onclick="startQuiz()" style="width:100%;max-width:300px;">Начать тест</button>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="screen" id="screen-quiz">
+    <div style="height:32px"></div>
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span class="progress-label" id="progress-label">Вопрос 1 из 12</span>
+        <span class="progress-pct" id="progress-pct">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="card q-wrap" id="q-card">
+      <div class="q-num" id="q-num">Вопрос 1</div>
+      <div class="q-text" id="q-text"></div>
+      <div class="options" id="q-options"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-back" id="btn-back" onclick="prevQ()">←</button>
+      <button class="btn btn-primary" id="btn-next" onclick="nextQ()" disabled>Далее</button>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="screen" id="screen-result">
+    <div style="height:32px"></div>
+    <div class="card res-hdr">
+      <div class="res-tag">Твой результат</div>
+      <div class="res-title" id="res-title"></div>
+      <div class="res-sub" id="res-sub"></div>
+      <div class="snap-label">Что тебе снимать</div>
+      <ul class="snap-list" id="res-list"></ul>
+    </div>
+
+    <div class="card cta" id="res-cta">
+      <div class="cta-label">Что дальше</div>
+      <div class="cta-title" id="cta-title"></div>
+      <div class="next-steps" id="next-steps"></div>
+    </div>
+
+    <div class="reset-wrap">
+      <button class="btn-reset" onclick="resetQuiz()">Пройти тест заново</button>
+    </div>
+  </div>
+
+  <div class="footer">@guzellusmanova · Тест про тип блога</div>
+</div>
+
+<script>
+const Qs=[
+  {id:1,text:"Ты просыпаешься с мыслью, что хочешь снять ролик прямо сейчас. Что это скорее всего было?",opts:[
+    {t:"Что-то произошло, и хочется рассказать об этом, поделиться реакцией, даже если это не несёт никакой пользы",v:"A"},
+    {t:"Пришла идея, как объяснить что-то полезное, что давно крутилось в голове",v:"B"},
+    {t:"Хочется рассказать историю из своей жизни, но так, чтобы из неё вышел конкретный вывод",v:"V"}
+  ]},
+  {id:2,text:"Подруга пишет тебе с вопросом «что мне делать». Как ты обычно отвечаешь?",opts:[
+    {t:"Рассказываю через свою историю: «у меня было так же, и вот что я поняла»",v:"A"},
+    {t:"Даю чёткий план действий по шагам, без историй и лишних эмоций",v:"B"},
+    {t:"Начинаю с истории, но заканчиваю конкретным советом, который можно применить",v:"V"}
+  ]},
+  {id:3,text:"Что тебя больше пугает при мысли о съёмке reels?",opts:[
+    {t:"Что придётся постоянно доказывать свою экспертность, а я не всегда в ней уверена",v:"A"},
+    {t:"Что придётся показывать личную жизнь, а мне это некомфортно",v:"B"},
+    {t:"Меня пугает и то, и другое примерно одинаково",v:"V"}
+  ]},
+  {id:4,text:"Представь двух блогеров: первый показывает жизнь без единого совета, второй никогда не показывает личное, только пользу. К кому ты ближе?",opts:[
+    {t:"Ближе к первому, мне интереснее показывать жизнь, чем учить чему-то",v:"A"},
+    {t:"Ближе ко второму, мне важнее быть полезной, чем интересной как личность",v:"B"},
+    {t:"Я где-то между ними, хочется и делиться собой, и быть полезной",v:"V"}
+  ]},
+  {id:5,text:"Как думаешь, какую тему ты смогла бы вести годами, без выгорания?",opts:[
+    {t:"Свою жизнь, взгляды и то, что происходит со мной день за днём",v:"A"},
+    {t:"Конкретную тему, в которой я разбираюсь и хочу углубляться",v:"B"},
+    {t:"Смесь того, что происходит со мной, и темы, в которой я разбираюсь",v:"V"}
+  ]},
+  {id:6,text:"Что для тебя маркер «сильного ролика»?",opts:[
+    {t:"Люди пишут «как будто про меня», «я тебя понимаю» — важнее эмоциональный отклик",v:"A"},
+    {t:"Люди пишут «спасибо, теперь понятно, что делать» — важнее конкретный результат",v:"B"},
+    {t:"И то, и другое вместе, в одном ролике",v:"V"}
+  ]},
+  {id:7,text:"Что тебе комфортнее: когда тебя хвалят за взгляды и характер, или за полезное решение?",opts:[
+    {t:"За взгляды и характер — важнее, чтобы люди чувствовали связь со мной",v:"A"},
+    {t:"За решение — важнее, чтобы человек получил результат",v:"B"},
+    {t:"И то, и другое одинаково важно",v:"V"}
+  ]},
+  {id:8,text:"Что тебя больнее заденет: «ты пустая, ничего полезного не говоришь» или «ты сухая, как учебник»?",opts:[
+    {t:"«Ты пустая» — важно, чтобы меня видели глубокой, а не поверхностной",v:"A"},
+    {t:"«Ты сухая» — важно, чтобы во мне видели специалиста",v:"B"},
+    {t:"Задевает и то, и другое примерно одинаково",v:"V"}
+  ]},
+  {id:9,text:"Как ты справляешься со страхом камеры?",opts:[
+    {t:"Легче, когда просто говорю от себя, без давления «быть экспертом»",v:"A"},
+    {t:"Легче, когда у меня есть чёткий план, что рассказать по теме",v:"B"},
+    {t:"Зависит от темы: личное — легко, экспертное — нужна подготовка",v:"V"}
+  ]},
+  {id:10,text:"Что тебе важнее в итоге, если представить блог через год?",opts:[
+    {t:"Чтобы блог отражал меня и мою жизнь",v:"A"},
+    {t:"Чтобы блог приносил деньги через продажу знаний и услуг",v:"B"},
+    {t:"Чтобы блог был мной и при этом зарабатывал",v:"V"}
+  ]},
+  {id:11,text:"Что тебе легче придумать без подготовки?",opts:[
+    {t:"Историю из своей жизни, у меня их много",v:"A"},
+    {t:"План или структуру, как объяснить что-то по шагам",v:"B"},
+    {t:"И то, и другое, легко перескакиваю между личным и структурным",v:"V"}
+  ]},
+  {id:12,text:"Если бы нужно было выбрать одно направление блога навсегда, что бы ты выбрала?",opts:[
+    {t:"Показывать свою жизнь и быть настоящей, даже без цели монетизации",v:"A"},
+    {t:"Обучать и решать проблемы людей в конкретной теме",v:"B"},
+    {t:"Не готова выбирать одно, важно совмещать личное с пользой",v:"V"}
+  ]}
+];
+
+const R={
+  A:{
+    title:"Тебе подходит лайф-блог",
+    sub:"Лайф-блог — это блог про твою жизнь, а не про экспертность. Здесь не нужно ничему учить и постоянно доказывать компетентность, достаточно быть собой и показывать, как ты живёшь. Твоя сила в честности и узнаваемости, а не в готовых схемах и советах.",
+    list:[
+      "Свой обычный день и то, что в нём происходит",
+      "Свои мысли и взгляды на происходящее",
+      "Истории из жизни, с выводом или без него",
+      "Реакции на ситуации, которые тебя задели",
+      "Быт, рутину, привычки — то, что кажется «неинтересным», но откликается другим",
+      "Маленькие события, которые на тебя повлияли"
+    ],
+    ctaTitle:"Хочешь научиться показывать себя <span>легко и честно</span>?",
+    steps:[
+      {label:"Бесплатный канал",text:"Смотреть «Снимай легко с Гузель»",href:"https://t.me/guzell_usmanova",primary:true},
+      {label:"Формат работы",text:"Записаться на консультацию",href:"index.html#apply",primary:false}
+    ]
+  },
+  B:{
+    title:"Тебе подходит экспертный блог",
+    sub:"Экспертный блог — это блог, где ты решаешь конкретную проблему человека через свои знания и опыт. Люди идут к тебе за результатом. Твоя сила не в личной драме, а в том, что ты умеешь объяснять, решать проблему и давать чёткий план.",
+    list:[
+      "Разборы ошибок, своих или чужих",
+      "Пошаговые действия «как сделать»",
+      "Ответы на частые вопросы из твоей темы",
+      "Кейсы «было / стало»",
+      "Разборы ситуаций, где человек не получает результат",
+      "Объяснение своего метода и подхода"
+    ],
+    ctaTitle:"Пора упаковать экспертность в <span>систему, а не в хаос</span>",
+    steps:[
+      {label:"Формат работы",text:"Личная работа с Гузель",href:"index.html#apply",primary:true},
+      {label:"Разовая помощь",text:"Записаться на консультацию",href:"index.html#apply",primary:false}
+    ]
+  },
+  V:{
+    title:"Тебе подходит смешанный формат",
+    sub:"Смешанный формат — это блог, где личная жизнь и экспертность существуют вместе, одно усиливает другое. Тебе тесно в одной роли: люди видят в тебе человека, а не только источник информации, и это твоя сила.",
+    list:[
+      "Личные истории, которые логично подводят к выводу или совету",
+      "Свой опыт, поданный через призму «что это дало мне и что даст тебе»",
+      "Разборы через личные примеры, а не абстрактные схемы",
+      "Ответы на вопросы аудитории — и как человек, и как специалист",
+      "Обычные жизненные ситуации, из которых можно вытащить пользу"
+    ],
+    ctaTitle:"Найдём баланс между <span>тобой и пользой</span>",
+    steps:[
+      {label:"Формат работы",text:"Записаться на консультацию",href:"index.html#apply",primary:true},
+      {label:"Бесплатный канал",text:"Смотреть «Снимай легко с Гузель»",href:"https://t.me/guzell_usmanova",primary:false}
+    ]
+  }
+};
+
+let ans={},cur=0;
+
+function startQuiz(){
+  document.getElementById('screen-start').classList.remove('active');
+  document.getElementById('screen-quiz').classList.add('active');
+  render();
+}
+function render(){
+  const q=Qs[cur];
+  const pct=Math.round((cur/Qs.length)*100);
+  document.getElementById('progress-label').textContent=`Вопрос ${cur+1} из ${Qs.length}`;
+  document.getElementById('progress-pct').textContent=pct+'%';
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('q-num').textContent=`Вопрос ${cur+1}`;
+  document.getElementById('q-text').textContent=q.text;
+  const el=document.getElementById('q-options');
+  el.innerHTML='';
+  q.opts.forEach(o=>{
+    const d=document.createElement('div');
+    d.className='option'+(ans[q.id]===o.v?' selected':'');
+    d.innerHTML=`<div class="opt-box"></div><div class="opt-text">${o.t}</div>`;
+    d.onclick=()=>{ans[q.id]=o.v;render();};
+    el.appendChild(d);
+  });
+  document.getElementById('btn-next').disabled=!ans[q.id];
+  document.getElementById('btn-back').style.display=cur===0?'none':'';
+  document.getElementById('btn-next').textContent=cur===Qs.length-1?'Узнать результат':'Далее';
+  const c=document.getElementById('q-card');
+  c.style.animation='none';c.offsetHeight;c.style.animation='fadeUp 0.35s ease both';
+}
+function nextQ(){
+  if(!ans[Qs[cur].id])return;
+  if(cur<Qs.length-1){cur++;render();}
+  else showResult();
+}
+function prevQ(){if(cur>0){cur--;render();}}
+function resetQuiz(){
+  ans={};cur=0;
+  document.getElementById('screen-result').classList.remove('active');
+  document.getElementById('screen-start').classList.add('active');
+  window.scrollTo({top:0});
+}
+
+function tally(){
+  const counts={A:0,B:0,V:0};
+  Object.values(ans).forEach(v=>counts[v]++);
+  let winner='A';
+  if(counts.B>counts[winner])winner='B';
+  if(counts.V>counts[winner])winner='V';
+  return winner;
+}
+
+function showResult(){
+  document.getElementById('screen-quiz').classList.remove('active');
+  document.getElementById('screen-result').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  const key=tally();
+  const r=R[key];
+  document.getElementById('res-title').textContent=r.title;
+  document.getElementById('res-sub').textContent=r.sub;
+  document.getElementById('res-list').innerHTML=r.list.map(li=>`<li>${li}</li>`).join('');
+  document.getElementById('cta-title').innerHTML=r.ctaTitle;
+  document.getElementById('next-steps').innerHTML=r.steps.map(s=>`
+    <a href="${s.href}" ${s.href.startsWith('http')?'target="_blank" rel="noopener"':''} class="${s.primary?'btn-cta':'btn-cta'}" style="${s.primary?'':'background:none;border:1px solid var(--border2);color:var(--white);'}">${s.text}</a>
+  `).join('');
+}
+</script>
+</body>
+</html>
