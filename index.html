@@ -122,8 +122,6 @@
   .cta { animation:fadeUp 0.5s 0.25s ease both; }
   .cta::before { opacity:1; background:linear-gradient(90deg, var(--yellow), var(--yellow2), var(--yellow)); height:3px; }
   .cta-label { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--yellow); margin-bottom:12px; opacity:0.75; }
-  .cta-title { font-family:'Unbounded',sans-serif; font-weight:800; font-size:clamp(17px,4vw,22px); color:var(--white); text-transform:uppercase; line-height:1.25; margin-bottom:18px; letter-spacing:0.3px; }
-  .cta-title span { color:var(--yellow); }
   .cta-list { list-style:none; margin-bottom:20px; }
   .cta-list li { font-size:13px; color:var(--grey); padding:6px 0 6px 18px; position:relative; line-height:1.55; border-bottom:1px solid rgba(255,255,255,0.04); }
   .cta-list li:last-child { border-bottom:none; }
@@ -247,9 +245,6 @@
   .case-stat-l { font-size:10.5px; color:var(--grey); line-height:1.4; margin-top:3px; }
   .case-quote { border-left:2px solid rgba(232,87,141,0.4); padding:2px 0 2px 14px; font-size:13px; font-style:italic; color:var(--white); line-height:1.6; margin-top:14px; }
   .case-quote-attr { display:block; margin-top:6px; font-size:11px; font-style:normal; color:var(--grey); }
-  .cta-body p { font-size:13px; color:var(--grey); line-height:1.7; margin-bottom:10px; }
-  .cta-quote { border-left:2px solid rgba(255,255,255,0.15); padding-left:14px; margin-top:16px; font-size:12px; font-style:italic; color:var(--grey); line-height:1.6; }
-  .cta-quote-attr { display:block; margin-top:4px; font-size:11px; font-style:normal; color:#6b606a; }
   .case-channel-note { font-size:12px; color:var(--grey); text-align:center; margin:2px 0 18px; line-height:1.6; animation:fadeUp 0.5s 0.2s ease both; }
   .case-channel-note a { color:var(--yellow); text-decoration:underline; }
 
@@ -364,10 +359,7 @@
 
     <div class="card lead-card" id="lead-form">
       <div class="cta-label">Оставить заявку</div>
-      <div class="cta-title" id="cta-title"></div>
-      <div class="cta-body" id="cta-body"></div>
-      <div class="cta-quote" id="cta-quote"></div>
-      <div class="lead-sub">Заполни поля ниже — сообщение откроется в Telegram-боте, останется нажать «Отправить» там.</div>
+      <div class="lead-sub" id="lead-sub">Оставь контакты — Гузель свяжется с тобой.</div>
       <form id="leadForm" onsubmit="return submitLead(event)">
         <div class="form-group">
           <input class="form-input" type="text" id="lead-name" placeholder="Имя" required>
@@ -377,7 +369,12 @@
         </div>
         <button type="submit" class="btn-cta">Отправить заявку</button>
       </form>
-      <div class="lead-note">Заявка откроется в чате с ботом <a href="https://t.me/Guzelhelp_Bot" target="_blank" rel="noopener" style="color:var(--yellow);">@Guzelhelp_Bot</a> — нажми «Отправить» ещё раз уже в Telegram.</div>
+      <div class="form-success" id="lead-success" style="display:none;">
+        <div class="form-success-ico">✅</div>
+        <div class="form-success-t">Заявка отправлена</div>
+        <div class="form-success-d">Гузель получила её и свяжется с тобой в ближайшее время.</div>
+      </div>
+      <div class="form-err show" id="lead-error" style="display:none;">Не получилось отправить заявку. Попробуй ещё раз или напиши напрямую в <a href="https://t.me/guzell_usmanova" target="_blank" rel="noopener" style="color:var(--yellow);">канал Гузель</a>.</div>
     </div>
 
     <div class="case-channel-note" id="case-channel">Ещё больше кейсов и разборов — в <a href="https://t.me/guzell_usmanova" target="_blank" rel="noopener">канале «Снимай легко с Гузель»</a></div>
@@ -513,13 +510,7 @@ const R={
         ],
         quote:{text:"«Благодаря челленджу мой канал начал заполняться разговорными рилсами».",attr:"Участница челленджа Гузель, анонимно"}
       }
-    ],
-    ctaTitle:"Сколько ещё идей останутся в заметках?",
-    ctaBody:[
-      "Если ты узнала себя в этих историях — хочется вести блог, но страшно начать или трудно продолжать — познакомься с моим клубом.",
-      "Посмотри программу, формат участия и выбери свой следующий шаг. Возможно, именно сейчас пора дать своему блогу шанс."
-    ],
-    ctaBtn:{text:"ХОЧУ В КЛУБ",href:"index.html#apply"}
+    ]
   },
   B:{
     title:"Тебе подходит экспертный блог",
@@ -593,14 +584,7 @@ const R={
           "Поэтому, когда мы обсуждаем твою идею, её упаковку и продажу аудитории, я опираюсь и на работу с клиентами, и на собственный опыт автора."
         ]
       }
-    ],
-    ctaTitle:"А что ты могла бы продавать через свой блог?",
-    ctaBody:[
-      "Возможно, у тебя уже есть услуга, но записей меньше, чем хочется. Или накопился опыт для своего продукта — а как его собрать и продать, пока непонятно.",
-      "Приходи на консультацию. Разберём твой блог, предложение и путь клиента к покупке. Определим, что мешает продажам сейчас и за что взяться в первую очередь."
-    ],
-    ctaBtn:{text:"ХОЧУ РАЗОБРАТЬ СВОЙ БЛОГ",href:"index.html#apply"},
-    ctaQuote:{text:"«Все понятно, вопросов не осталось) Теперь только бери и делай».",attr:"Отзыв о консультации Гузель"}
+    ]
   },
   V:{
     title:"Тебе подходит смешанный формат",
@@ -646,14 +630,7 @@ const R={
           "Если ты продаёшь услуги, в блоге важно дать людям возможность узнать тебя и понять, с какой задачей к тебе можно прийти."
         ]
       }
-    ],
-    ctaTitle:"Как соединить в твоём блоге жизнь, опыт и продажи?",
-    ctaBody:[
-      "Какие истории хочется рассказывать? Какие темы показывают твой опыт? Что ты можешь предложить аудитории?",
-      "На консультации разберём твой блог и найдём связь между тем, что тебе интересно создавать, и тем, что ты хочешь продавать. Соберём понятное направление и определим первые действия."
-    ],
-    ctaBtn:{text:"ХОЧУ СОБРАТЬ СВОЙ БЛОГ",href:"index.html#apply"},
-    ctaQuote:{text:"«Проанализировали мой аккаунт (фото, тексты, шапку, описание). Уже некоторые рекомендации применила у себя».",attr:"Отзыв о консультации Гузель"}
+    ]
   }
 };
 
@@ -739,11 +716,15 @@ function showResult(){
       </div>
     </div>
   `).join('');
-  document.getElementById('cta-title').textContent=r.ctaTitle;
-  document.getElementById('cta-body').innerHTML=r.ctaBody.map(p=>`<p>${p}</p>`).join('');
-  document.getElementById('cta-quote').innerHTML=r.ctaQuote?`${r.ctaQuote.text}${r.ctaQuote.attr?`<span class="cta-quote-attr">${r.ctaQuote.attr}</span>`:''}`:'';
-  document.getElementById('cta-quote').style.display=r.ctaQuote?'':'none';
   document.getElementById('format-panel').classList.remove('open');
+  document.getElementById('leadForm').reset();
+  document.getElementById('leadForm').style.display='';
+  const submitBtn=document.querySelector('#leadForm button[type=submit]');
+  submitBtn.disabled=false;
+  submitBtn.textContent='Отправить заявку';
+  document.getElementById('lead-sub').style.display='';
+  document.getElementById('lead-success').style.display='none';
+  document.getElementById('lead-error').style.display='none';
   leadGoal='';
 }
 
@@ -760,7 +741,10 @@ function setGoal(g){
   leadGoal=g;
 }
 
-function submitLead(e){
+const TG_BOT_TOKEN='8059900331:AAE7xTzJRbvvMGZQlWNeOw6XXJaDlPkUf7g';
+const TG_CHAT_ID='565012705';
+
+async function submitLead(e){
   e.preventDefault();
   const name=document.getElementById('lead-name').value.trim();
   const phone=document.getElementById('lead-phone').value.trim();
@@ -776,7 +760,29 @@ function submitLead(e){
     tg?('Telegram: '+tg):null,
     comment?('Комментарий: '+comment):null
   ].filter(Boolean).join('\n');
-  window.open('https://t.me/Guzelhelp_Bot?text='+encodeURIComponent(lines),'_blank');
+
+  const btn=document.querySelector('#leadForm button[type=submit]');
+  const originalBtnText=btn.textContent;
+  btn.disabled=true;
+  btn.textContent='Отправляем…';
+  document.getElementById('lead-error').style.display='none';
+
+  try{
+    const resp=await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({chat_id:TG_CHAT_ID,text:lines})
+    });
+    const data=await resp.json();
+    if(!data.ok) throw new Error('send failed');
+    document.getElementById('leadForm').style.display='none';
+    document.getElementById('lead-sub').style.display='none';
+    document.getElementById('lead-success').style.display='block';
+  }catch(err){
+    btn.disabled=false;
+    btn.textContent=originalBtnText;
+    document.getElementById('lead-error').style.display='block';
+  }
   return false;
 }
 </script>
