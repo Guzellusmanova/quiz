@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Тест: Какой формат блога тебе подходит? — Гузель Усманова</title>
+<title>Тест: Какой тип блога тебе подходит? — Гузель Усманова</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -145,6 +145,9 @@
   .btn-reset:hover { border-color:rgba(255,255,255,0.22); color:var(--white); }
 
   .footer { text-align:center; padding-top:28px; font-size:10px; color:#4a424c; letter-spacing:1.5px; text-transform:uppercase; }
+  .footer-legal { margin-top:10px; letter-spacing:0.5px; }
+  .footer-legal a { color:#6b606a; text-decoration:underline; text-transform:none; font-size:11px; }
+  .footer-legal a:hover { color:var(--grey); }
 
   .screen { display:none; }
   .screen.active { display:block; animation:fadeUp 0.4s ease both; }
@@ -249,19 +252,49 @@
   .cta-quote-attr { display:block; margin-top:4px; font-size:11px; font-style:normal; color:#6b606a; }
   .case-channel-note { font-size:12px; color:var(--grey); text-align:center; margin:2px 0 18px; line-height:1.6; animation:fadeUp 0.5s 0.2s ease both; }
   .case-channel-note a { color:var(--yellow); text-decoration:underline; }
+
+  /* NEXT STEPS BUTTONS */
+  .next-steps-card { margin-bottom:14px; animation:fadeUp 0.5s ease both; }
+  .btn-cta-outline { background:transparent; color:var(--white); border:1px solid var(--border2); box-shadow:none; }
+  .btn-cta-outline:hover { background:rgba(232,87,141,0.08); box-shadow:none; transform:none; }
+  .format-panel { max-height:0; overflow:hidden; transition:max-height .4s ease; }
+  .format-panel.open { max-height:900px; }
+  .format-list { list-style:none; margin:4px 0 16px; }
+  .format-list li { font-size:13px; color:var(--grey); padding:8px 0 8px 18px; position:relative; line-height:1.6; border-bottom:1px solid rgba(255,255,255,0.05); }
+  .format-list li:last-child { border-bottom:none; }
+  .format-list li::before { content:''; position:absolute; left:0; top:14px; width:7px; height:2px; background:var(--yellow); }
+
+  /* CASE ACCORDION */
+  .case-card { padding:0; overflow:hidden; }
+  .case-head { display:flex; align-items:center; gap:14px; width:100%; background:none; border:none; padding:24px 26px; cursor:pointer; text-align:left; font-family:inherit; color:inherit; }
+  .case-head-main { flex:1; min-width:0; }
+  .case-chev { flex-shrink:0; width:26px; height:26px; border-radius:50%; border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; font-size:15px; color:var(--yellow); transition:transform .3s ease; }
+  .case-card.open .case-chev { transform:rotate(45deg); }
+  .case-head .case-tag { margin-bottom:6px; }
+  .case-head .case-big { font-size:clamp(20px,5.5vw,26px); margin:0; }
+  .case-head .case-caption { margin:4px 0 0; }
+  .case-head .case-head-title { font-family:'Unbounded',sans-serif; font-weight:700; font-size:13px; color:var(--white); text-transform:uppercase; line-height:1.4; }
+  .case-body-wrap { max-height:0; overflow:hidden; transition:max-height .4s ease; }
+  .case-card.open .case-body-wrap { max-height:1400px; }
+  .case-body-inner { padding:0 26px 26px; }
+  .case-body-inner .case-title { margin-top:0; }
+
+  /* LEAD FORM */
+  .lead-card { animation:fadeUp 0.5s ease both; margin-bottom:14px; }
+  .lead-sub { font-size:13px; color:var(--grey); line-height:1.65; margin-bottom:20px; }
+  .lead-note { font-size:11px; color:#6b606a; text-align:center; margin-top:4px; line-height:1.6; }
 </style>
 <body>
 <div class="container">
 
   <div class="top-bar">
-    <a href="https://www.instagram.com/usma.life?stkn=MWpneHE3a2V0Mmw2Zw==" target="_blank" rel="noopener" class="top-link ig">📷 @usma.life</a>
-    <a href="index.html" class="top-link">← Назад на сайт Гузель</a>
+    <a href="https://www.instagram.com/usma.life?stkn=MWpneHE3a2V0Mmw2Zw==" target="_blank" rel="noopener" class="top-link ig">📷 usma.life</a>
   </div>
 
   <!-- START -->
   <div class="screen active" id="screen-start">
     <div class="header">
-      <div class="handle">@guzellusmanova</div>
+      <a href="https://www.instagram.com/usma.life?stkn=MWpneHE3a2V0Mmw2Zw==" target="_blank" rel="noopener" class="handle" style="text-decoration:none;">usma.life</a>
       <h1>Какой тип блога тебе подходит?</h1>
       <p class="header-sub">Узнай за 2 минуты — лайф, экспертный или смешанный формат. 12 вопросов, никакой воды.</p>
       <div class="stats">
@@ -309,16 +342,42 @@
       <ul class="snap-list" id="res-list"></ul>
     </div>
 
+    <div class="card next-steps-card">
+      <div class="cta-label">Как продолжить</div>
+      <a href="#lead-form" class="btn-cta" onclick="setGoal('Консультация')">Записаться на консультацию</a>
+      <a href="https://t.me/guzell_usmanova" target="_blank" rel="noopener" class="btn-cta btn-cta-outline">Смотреть бесплатный канал</a>
+      <button type="button" class="btn-cta btn-cta-outline" id="format-toggle" onclick="toggleFormat()">Формат личной работы</button>
+      <div class="format-panel" id="format-panel">
+        <ul class="format-list">
+          <li>Чёткое понимание своей изюминки, ценностей и характера, которые мгновенно выделят тебя среди тысяч безликих блогов.</li>
+          <li>Избавление от страхов, стыда и неуверенности: ты начнёшь кайфовать от себя и легко говорить своим живым голосом.</li>
+          <li>Минимум 30 снятых Reels, которые ты создашь вместе со мной: от идеи и сценария до съёмки и публикации. Больше никаких «не знаю, что снимать».</li>
+          <li>Своя рабочая система контента: поймёшь, какие темы, форматы и подача работают именно для тебя, и сможешь дальше самостоятельно создавать контент без вечного поиска идей и копирования чужих блогов.</li>
+        </ul>
+        <a href="#lead-form" class="btn-cta" onclick="setGoal('Формат личной работы')">Оставить заявку на этот формат</a>
+      </div>
+    </div>
+
     <div class="case-intro" id="case-intro"></div>
 
     <div class="case-section" id="case-section"></div>
 
-    <div class="card cta" id="res-cta">
-      <div class="cta-label">Что дальше</div>
+    <div class="card lead-card" id="lead-form">
+      <div class="cta-label">Оставить заявку</div>
       <div class="cta-title" id="cta-title"></div>
       <div class="cta-body" id="cta-body"></div>
-      <a class="btn-cta" id="cta-btn" href="#" target="_self"></a>
       <div class="cta-quote" id="cta-quote"></div>
+      <div class="lead-sub">Заполни поля ниже — сообщение откроется в Telegram-боте, останется нажать «Отправить» там.</div>
+      <form id="leadForm" onsubmit="return submitLead(event)">
+        <div class="form-group">
+          <input class="form-input" type="text" id="lead-name" placeholder="Имя" required>
+          <input class="form-input" type="tel" id="lead-phone" placeholder="Телефон" required>
+          <input class="form-input" type="text" id="lead-tg" placeholder="Telegram (@username)">
+          <textarea class="form-input" id="lead-comment" rows="3" placeholder="Комментарий"></textarea>
+        </div>
+        <button type="submit" class="btn-cta">Отправить заявку</button>
+      </form>
+      <div class="lead-note">Заявка откроется в чате с ботом <a href="https://t.me/Guzelhelp_Bot" target="_blank" rel="noopener" style="color:var(--yellow);">@Guzelhelp_Bot</a> — нажми «Отправить» ещё раз уже в Telegram.</div>
     </div>
 
     <div class="case-channel-note" id="case-channel">Ещё больше кейсов и разборов — в <a href="https://t.me/guzell_usmanova" target="_blank" rel="noopener">канале «Снимай легко с Гузель»</a></div>
@@ -328,12 +387,17 @@
     </div>
   </div>
 
-  <div class="footer">@guzellusmanova · Тест про тип блога</div>
+  <div class="footer">
+    usma.life · Тест про тип блога
+    <div class="footer-legal">
+      <a href="oferta.html">Оферта</a> · <a href="privacy.html">Конфиденциальность</a> · <a href="consent.html">Согласие на ПДн</a>
+    </div>
+  </div>
 </div>
 
 <script>
 const Qs=[
-  {id:1,text:"Ты просыпаешься с мыслью, что хочешь снять ролик прямо сейчас. Что это скорее всего будет?",opts:[
+  {id:1,text:"Ты просыпаешься с мыслью, что хочешь снять ролик прямо сейчас. Что это скорее всего было?",opts:[
     {t:"Что-то произошло, и хочется рассказать об этом, поделиться реакцией, даже если это не несёт никакой пользы",v:"A"},
     {t:"Пришла идея, как объяснить что-то полезное, что давно крутилось в голове",v:"B"},
     {t:"Хочется рассказать историю из своей жизни, но так, чтобы из неё вышел конкретный вывод",v:"V"}
@@ -651,28 +715,69 @@ function showResult(){
   window.scrollTo({top:0,behavior:'smooth'});
   const key=tally();
   const r=R[key];
+  currentResultTitle=r.title;
   document.getElementById('res-title').textContent=r.title;
   document.getElementById('res-sub').textContent=r.sub;
   document.getElementById('res-list').innerHTML=r.list.map(li=>`<li>${li}</li>`).join('');
   document.getElementById('case-intro').textContent=r.intro;
-  document.getElementById('case-section').innerHTML=r.case.map(c=>`
-    <div class="card case-card">
-      <div class="case-tag">${c.tag}</div>
-      ${c.big?`<div class="case-big">${c.big}</div><div class="case-caption">${c.caption}</div>`:''}
-      <div class="case-title">${c.title}</div>
-      <div class="case-text">${c.text.map(p=>`<p>${p}</p>`).join('')}</div>
-      ${c.stats?`<div class="case-stats">${c.stats.map(s=>`<div class="case-stat"><div class="case-stat-v">${s.v}</div><div class="case-stat-l">${s.l}</div></div>`).join('')}</div>`:''}
-      ${c.quote?`<div class="case-quote">${c.quote.text}${c.quote.attr?`<span class="case-quote-attr">${c.quote.attr}</span>`:''}</div>`:''}
+  document.getElementById('case-section').innerHTML=r.case.map((c,i)=>`
+    <div class="card case-card" id="case-${i}">
+      <button type="button" class="case-head" onclick="toggleCase(${i})">
+        <div class="case-head-main">
+          <div class="case-tag">${c.tag}</div>
+          ${c.big?`<div class="case-big">${c.big}</div><div class="case-caption">${c.caption}</div>`:`<div class="case-head-title">${c.title}</div>`}
+        </div>
+        <div class="case-chev">+</div>
+      </button>
+      <div class="case-body-wrap">
+        <div class="case-body-inner">
+          ${c.big?`<div class="case-title">${c.title}</div>`:''}
+          <div class="case-text">${c.text.map(p=>`<p>${p}</p>`).join('')}</div>
+          ${c.stats?`<div class="case-stats">${c.stats.map(s=>`<div class="case-stat"><div class="case-stat-v">${s.v}</div><div class="case-stat-l">${s.l}</div></div>`).join('')}</div>`:''}
+          ${c.quote?`<div class="case-quote">${c.quote.text}${c.quote.attr?`<span class="case-quote-attr">${c.quote.attr}</span>`:''}</div>`:''}
+        </div>
+      </div>
     </div>
   `).join('');
   document.getElementById('cta-title').textContent=r.ctaTitle;
   document.getElementById('cta-body').innerHTML=r.ctaBody.map(p=>`<p>${p}</p>`).join('');
-  const btn=document.getElementById('cta-btn');
-  btn.textContent=r.ctaBtn.text;
-  btn.href=r.ctaBtn.href;
-  if(r.ctaBtn.href.startsWith('http')){btn.target='_blank';btn.rel='noopener';}else{btn.removeAttribute('target');btn.removeAttribute('rel');}
   document.getElementById('cta-quote').innerHTML=r.ctaQuote?`${r.ctaQuote.text}${r.ctaQuote.attr?`<span class="cta-quote-attr">${r.ctaQuote.attr}</span>`:''}`:'';
   document.getElementById('cta-quote').style.display=r.ctaQuote?'':'none';
+  document.getElementById('format-panel').classList.remove('open');
+  leadGoal='';
+}
+
+function toggleCase(i){
+  document.getElementById('case-'+i).classList.toggle('open');
+}
+
+function toggleFormat(){
+  document.getElementById('format-panel').classList.toggle('open');
+}
+
+let leadGoal='',currentResultTitle='';
+function setGoal(g){
+  leadGoal=g;
+}
+
+function submitLead(e){
+  e.preventDefault();
+  const name=document.getElementById('lead-name').value.trim();
+  const phone=document.getElementById('lead-phone').value.trim();
+  const tg=document.getElementById('lead-tg').value.trim();
+  const comment=document.getElementById('lead-comment').value.trim();
+  if(!name||!phone){return false;}
+  const lines=[
+    'Заявка с квиза «Какой блог тебе подходит»',
+    'Результат: '+currentResultTitle,
+    leadGoal?('Интересует: '+leadGoal):null,
+    'Имя: '+name,
+    'Телефон: '+phone,
+    tg?('Telegram: '+tg):null,
+    comment?('Комментарий: '+comment):null
+  ].filter(Boolean).join('\n');
+  window.open('https://t.me/Guzelhelp_Bot?text='+encodeURIComponent(lines),'_blank');
+  return false;
 }
 </script>
 </body>
