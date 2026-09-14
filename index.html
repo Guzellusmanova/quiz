@@ -220,12 +220,42 @@
   .snap-list li::before { content:''; position:absolute; left:0; top:15px; width:7px; height:2px; background:var(--yellow); }
   .snap-label { font-size:12px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--grey); margin:22px 0 8px; }
   .next-steps { display:flex; flex-direction:column; gap:10px; margin-top:6px; }
+
+  /* TOP BAR */
+  .top-bar { padding-top:20px; display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap; }
+  .top-link { display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--grey); text-decoration:none; }
+  .top-link:hover { color:var(--white); }
+  .top-link.ig { color:var(--yellow); font-weight:700; letter-spacing:0.3px; }
+  .top-link.ig:hover { color:var(--yellow2); }
+
+  /* CASE CARD */
+  .case-intro { font-size:13px; color:var(--grey); line-height:1.7; padding:2px 4px 16px; animation:fadeUp 0.45s ease both; }
+  .case-section { display:flex; flex-direction:column; gap:14px; margin-bottom:14px; }
+  .case-card { animation:fadeUp 0.5s 0.12s ease both; }
+  .case-tag { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--yellow); margin-bottom:12px; opacity:0.75; }
+  .case-big { font-family:'Unbounded',sans-serif; font-weight:800; font-size:clamp(26px,7vw,34px); color:var(--yellow); line-height:1.1; word-break:break-word; }
+  .case-caption { font-size:12px; color:var(--grey); margin:6px 0 14px; letter-spacing:0.2px; }
+  .case-title { font-family:'Unbounded',sans-serif; font-weight:700; font-size:14px; color:var(--white); text-transform:uppercase; line-height:1.4; margin-bottom:12px; letter-spacing:0.2px; }
+  .case-text p { font-size:13px; color:var(--grey); line-height:1.7; margin-bottom:10px; }
+  .case-text p:last-child { margin-bottom:0; }
+  .case-stats { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0 2px; }
+  .case-stat { flex:1 1 130px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:10px; padding:10px 12px; }
+  .case-stat-v { font-family:'Unbounded',sans-serif; font-weight:800; font-size:14px; color:var(--yellow); word-break:break-word; }
+  .case-stat-l { font-size:10.5px; color:var(--grey); line-height:1.4; margin-top:3px; }
+  .case-quote { border-left:2px solid rgba(232,87,141,0.4); padding:2px 0 2px 14px; font-size:13px; font-style:italic; color:var(--white); line-height:1.6; margin-top:14px; }
+  .case-quote-attr { display:block; margin-top:6px; font-size:11px; font-style:normal; color:var(--grey); }
+  .cta-body p { font-size:13px; color:var(--grey); line-height:1.7; margin-bottom:10px; }
+  .cta-quote { border-left:2px solid rgba(255,255,255,0.15); padding-left:14px; margin-top:16px; font-size:12px; font-style:italic; color:var(--grey); line-height:1.6; }
+  .cta-quote-attr { display:block; margin-top:4px; font-size:11px; font-style:normal; color:#6b606a; }
+  .case-channel-note { font-size:12px; color:var(--grey); text-align:center; margin:2px 0 18px; line-height:1.6; animation:fadeUp 0.5s 0.2s ease both; }
+  .case-channel-note a { color:var(--yellow); text-decoration:underline; }
 </style>
 <body>
 <div class="container">
 
-  <div style="padding-top:20px;text-align:center;">
-    <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--grey);text-decoration:none;">← Назад на сайт Гузель</a>
+  <div class="top-bar">
+    <a href="https://www.instagram.com/usma.life?stkn=MWpneHE3a2V0Mmw2Zw==" target="_blank" rel="noopener" class="top-link ig">📷 @usma.life</a>
+    <a href="index.html" class="top-link">← Назад на сайт Гузель</a>
   </div>
 
   <!-- START -->
@@ -279,11 +309,19 @@
       <ul class="snap-list" id="res-list"></ul>
     </div>
 
+    <div class="case-intro" id="case-intro"></div>
+
+    <div class="case-section" id="case-section"></div>
+
     <div class="card cta" id="res-cta">
       <div class="cta-label">Что дальше</div>
       <div class="cta-title" id="cta-title"></div>
-      <div class="next-steps" id="next-steps"></div>
+      <div class="cta-body" id="cta-body"></div>
+      <a class="btn-cta" id="cta-btn" href="#" target="_self"></a>
+      <div class="cta-quote" id="cta-quote"></div>
     </div>
+
+    <div class="case-channel-note" id="case-channel">Ещё больше кейсов и разборов — в <a href="https://t.me/guzell_usmanova" target="_blank" rel="noopener">канале «Снимай легко с Гузель»</a></div>
 
     <div class="reset-wrap">
       <button class="btn-reset" onclick="resetQuiz()">Пройти тест заново</button>
@@ -369,11 +407,55 @@ const R={
       "Быт, рутину, привычки — то, что кажется «неинтересным», но откликается другим",
       "Маленькие события, которые на тебя повлияли"
     ],
-    ctaTitle:"Хочешь научиться показывать себя <span>легко и честно</span>?",
-    steps:[
-      {label:"Бесплатный канал",text:"Смотреть «Снимай легко с Гузель»",href:"https://t.me/guzell_usmanova",primary:true},
-      {label:"Формат работы",text:"Записаться на консультацию",href:"index.html#apply",primary:false}
-    ]
+    intro:"Твои истории, характер и взгляд на жизнь могут стать причиной, по которой люди захотят остаться в блоге. А опыт, которым ты делишься, — основой для собственного продукта.",
+    case:[
+      {
+        tag:"Кейс 1 · Гузель",
+        big:"30 000 ₽",
+        caption:"За неделю на своём мини-продукте",
+        title:"Показываю жизнь. Делюсь опытом. Продаю свой продукт.",
+        text:[
+          "В моём блоге есть танцы, личные истории, мысли и опыт, который может пригодиться другим. Мне важно оставаться собой — и при этом я создаю и продаю собственные продукты.",
+          "Один из моих мини-продуктов принёс 30 000 ₽ за неделю.",
+          "У тебя тоже могут быть знания и опыт, ценность которых ты пока не замечаешь. То, с чем ты уже разобралась, для другого человека может быть тем самым ответом, который он ищет.",
+          "Я веду блог про харизму, свободу и проявленность. Показываю себя и нахожу людей, которым это близко. Всё начинается с готовности дать другим увидеть тебя."
+        ],
+        stats:[{v:"2 915",l:"подписчиков в личном блоге"}]
+      },
+      {
+        tag:"Кейс 2 · История ученицы",
+        title:"«А тут ты с танцами, такая живая, весёлая».",
+        text:[
+          "Так одна из участниц описала знакомство со мной. Она увидела видео, оставила комментарий, мы разговорились — и она пришла на обучение.",
+          "До этого девушка боялась показывать себя. Даже создала отдельную страницу для первого Reels. А потом решилась перенести видео в основной аккаунт и обнаружила: никто её не осудил.",
+          "Личный контент помог ей найти меня. А после обучения она сама решилась выйти к своей аудитории."
+        ],
+        quote:{text:"«Но самое главное я показала миру себя, чего очень боялась»."}
+      },
+      {
+        tag:"Кейс 3 · Регулярные публикации",
+        title:"«Самое главное — получилось не слиться».",
+        text:[
+          "Участница челленджа каждый день выкладывала видео: то в пробном режиме, то на основной странице. В группе находились идеи, мотивация и поддержка, с которыми продолжать было легче.",
+          "В конце она написала, что идёт в следующий челлендж."
+        ],
+        quote:{text:"«Каждый день выкладывала видео то в пробный режим, то на основную страницу».",attr:"Участница челленджа Гузель"}
+      },
+      {
+        tag:"Кейс 4 · Первые разговорные Reels",
+        title:"Начала снимать. Начала выкладывать.",
+        text:[
+          "После челленджа участница рассказала, что её канал начал заполняться разговорными Reels. Появились толчок к действию и понимание, как делать видео лучше."
+        ],
+        quote:{text:"«Благодаря челленджу мой канал начал заполняться разговорными рилсами».",attr:"Участница челленджа Гузель, анонимно"}
+      }
+    ],
+    ctaTitle:"Сколько ещё идей останутся в заметках?",
+    ctaBody:[
+      "Если ты узнала себя в этих историях — хочется вести блог, но страшно начать или трудно продолжать — познакомься с моим клубом.",
+      "Посмотри программу, формат участия и выбери свой следующий шаг. Возможно, именно сейчас пора дать своему блогу шанс."
+    ],
+    ctaBtn:{text:"ХОЧУ В КЛУБ",href:"index.html#apply"}
   },
   B:{
     title:"Тебе подходит экспертный блог",
@@ -386,11 +468,75 @@ const R={
       "Разборы ситуаций, где человек не получает результат",
       "Объяснение своего метода и подхода"
     ],
-    ctaTitle:"Пора упаковать экспертность в <span>систему, а не в хаос</span>",
-    steps:[
-      {label:"Формат работы",text:"Личная работа с Гузель",href:"index.html#apply",primary:true},
-      {label:"Разовая помощь",text:"Записаться на консультацию",href:"index.html#apply",primary:false}
-    ]
+    intro:"Твой опыт может стать основой для продаж услуг, собственного продукта или обучения. Посмотри, каких результатов мы достигали с клиентами — и какой из этих путей ближе тебе.",
+    case:[
+      {
+        tag:"Кейс 1 · Настя",
+        big:"110 000 ₽",
+        caption:"На мини-продукте через автоворонку",
+        title:"5–7 продаж в день. Без личного участия в каждой покупке.",
+        text:[
+          "Настя работала куратором в онлайн-школе и хотела развивать своё. Но продажи из блога были нестабильными, трафик — нерегулярным, а понятного пути клиента к покупке не было.",
+          "Вместе мы запустили мини-продукт через автоворонку. Результат — 110 000 ₽ и 5–7 продаж каждый день без её личного участия в продажах и без обратной связи по продукту.",
+          "Настя хотела хотя бы окупить работу со специалистом. А получила продукт, который продолжил продаваться через настроенную систему."
+        ],
+        quote:{text:"«Я рассчитывала за время обучения с тобой отбить стоимость твоей услуги, а получилось что я сделала такое вложение, которое приносит мне ежедневный доход на пассиве».",attr:"Настя"}
+      },
+      {
+        tag:"Кейс 2 · Ирина",
+        big:"1 100 000 ₽",
+        caption:"Оборот за ноябрь",
+        title:"За блогом — обращения, записи и реальные продажи.",
+        text:[
+          "Когда продаёшь услуги, хочется видеть в блоге будущих клиентов: людей, которые спрашивают, записываются и покупают.",
+          "В клиентском проекте Ирины оборот за ноябрь составил 1 100 000 ₽. А отдельная акция с 24 ноября по 15 декабря принесла 550 000 ₽ оборота и около 300 000 ₽ чистой прибыли.",
+          "Это тот уровень задач, с которым можно работать в блоге: как представить услугу, заинтересовать предложением и помочь человеку решиться на запись."
+        ],
+        stats:[{v:"550 000 ₽",l:"оборот по акции"},{v:"≈300 000 ₽",l:"чистая прибыль от акции, по оценке Ирины"}]
+      },
+      {
+        tag:"Кейс 3 · Бьюти-студия",
+        big:"253 800 ₽",
+        caption:"Выручка на третьем месяце работы",
+        title:"Начали с нового аккаунта. Дошли до полной записи.",
+        text:[
+          "Владелица сомневалась, стоит ли создавать отдельную страницу для новой студии. Боялась, что набирать аудиторию и клиентов с нуля придётся долго.",
+          "Мы выбрали отдельный аккаунт. В первый месяц выручка составила 87 875 ₽, во второй — 93 200 ₽, в третий — уже 253 800 ₽. Чистая прибыль на третьем месяце превысила 100 000 ₽.",
+          "Запись на коррекцию фигуры заполнилась настолько, что рекламу этого направления отключили."
+        ],
+        stats:[{v:"87 875 ₽ → 253 800 ₽",l:"рост выручки с первого до третьего месяца"},{v:"100 000+ ₽",l:"чистая прибыль на третьем месяце"}],
+        quote:{text:"«На третий месяц работы уже отключали рекламу по коррекции фигуры, т.к. был фулбукинг».",attr:"Клиентка"}
+      },
+      {
+        tag:"Кейс 4 · Две базы отдыха",
+        big:"60%",
+        caption:"Сезонных продаж — через Instagram",
+        title:"Аудитория выросла. Блог стал каналом продаж.",
+        text:[
+          "У владельцев «Дрим бей» и «Жемчужного берега» уже были два аккаунта. Но не хватало времени и профессиональных знаний, чтобы заниматься ими перед летним сезоном.",
+          "За три месяца нашей работы один аккаунт вырос примерно с 6 000 до 11 000 подписчиков, второй — с 7 000 до 14 000. По итогам сезона компания отметила: 60% продаж прошли через Instagram.",
+          "Гости получали быстрые ответы в директе, новые подписчики — приветствие и нужную информацию. Общение в блоге помогало людям разобраться в предложении и выбрать отдых."
+        ],
+        stats:[{v:"6 000 → 11 000",l:"подписчики первого аккаунта"},{v:"7 000 → 14 000",l:"подписчики второго аккаунта"},{v:"3 месяца",l:"совместная работа"}]
+      },
+      {
+        tag:"Кейс 5 · Гузель",
+        big:"30 000 ₽",
+        caption:"За неделю на своём мини-продукте",
+        title:"Я сама продаю то, что умею.",
+        text:[
+          "Я работаю с продуктами клиентов и запускаю собственные. Мой мини-продукт принёс 30 000 ₽ за неделю.",
+          "Поэтому, когда мы обсуждаем твою идею, её упаковку и продажу аудитории, я опираюсь и на работу с клиентами, и на собственный опыт автора."
+        ]
+      }
+    ],
+    ctaTitle:"А что ты могла бы продавать через свой блог?",
+    ctaBody:[
+      "Возможно, у тебя уже есть услуга, но записей меньше, чем хочется. Или накопился опыт для своего продукта — а как его собрать и продать, пока непонятно.",
+      "Приходи на консультацию. Разберём твой блог, предложение и путь клиента к покупке. Определим, что мешает продажам сейчас и за что взяться в первую очередь."
+    ],
+    ctaBtn:{text:"ХОЧУ РАЗОБРАТЬ СВОЙ БЛОГ",href:"index.html#apply"},
+    ctaQuote:{text:"«Все понятно, вопросов не осталось) Теперь только бери и делай».",attr:"Отзыв о консультации Гузель"}
   },
   V:{
     title:"Тебе подходит смешанный формат",
@@ -402,11 +548,48 @@ const R={
       "Ответы на вопросы аудитории — и как человек, и как специалист",
       "Обычные жизненные ситуации, из которых можно вытащить пользу"
     ],
-    ctaTitle:"Найдём баланс между <span>тобой и пользой</span>",
-    steps:[
-      {label:"Формат работы",text:"Записаться на консультацию",href:"index.html#apply",primary:true},
-      {label:"Бесплатный канал",text:"Смотреть «Снимай легко с Гузель»",href:"https://t.me/guzell_usmanova",primary:false}
-    ]
+    intro:"Твой характер помогает людям почувствовать близость. Твой опыт — понять, в чём ты можешь им помочь. В таком блоге можно показывать жизнь, делиться знаниями и продавать свои услуги или продукты.",
+    case:[
+      {
+        tag:"Кейс 1 · Гузель",
+        big:"30 000 ₽",
+        caption:"На своём мини-продукте за неделю",
+        title:"Могу танцевать в кадре. Могу делиться опытом. Могу продавать.",
+        text:[
+          "В моём блоге есть и личное, и профессиональное. Одна из участниц впервые заметила меня в видео с танцами: оставила комментарий, мы разговорились — и она пришла на обучение.",
+          "А собственный мини-продукт принёс мне 30 000 ₽ за неделю.",
+          "Это разные примеры из моей практики: как люди знакомятся с автором через личный контент и как автор может зарабатывать на своём опыте."
+        ]
+      },
+      {
+        tag:"Кейс 2 · Настя",
+        big:"110 000 ₽",
+        caption:"На мини-продукте через автоворонку",
+        title:"5–7 продаж в день без личного участия в каждой покупке.",
+        text:[
+          "Настя хотела развивать свой продукт, но продажи из блога были нестабильными. Вместе мы запустили мини-продукт через автоворонку.",
+          "Результат — ежедневные продажи без её личного участия в каждой покупке и без обратной связи по продукту."
+        ],
+        quote:{text:"«Марафон сейчас без моего участия продается, все выстроено и это то, что я хотела»."}
+      },
+      {
+        tag:"Кейс 3 · Ирина",
+        big:"1 100 000 ₽",
+        caption:"Оборот за ноябрь",
+        title:"Когда за контентом стоит понятное предложение.",
+        text:[
+          "В клиентском проекте Ирины — обращения, запись на услуги и 1 100 000 ₽ оборота за ноябрь. В отдельном отчёте по акции — 550 000 ₽ оборота и около 300 000 ₽ чистой прибыли.",
+          "Если ты продаёшь услуги, в блоге важно дать людям возможность узнать тебя и понять, с какой задачей к тебе можно прийти."
+        ]
+      }
+    ],
+    ctaTitle:"Как соединить в твоём блоге жизнь, опыт и продажи?",
+    ctaBody:[
+      "Какие истории хочется рассказывать? Какие темы показывают твой опыт? Что ты можешь предложить аудитории?",
+      "На консультации разберём твой блог и найдём связь между тем, что тебе интересно создавать, и тем, что ты хочешь продавать. Соберём понятное направление и определим первые действия."
+    ],
+    ctaBtn:{text:"ХОЧУ СОБРАТЬ СВОЙ БЛОГ",href:"index.html#apply"},
+    ctaQuote:{text:"«Проанализировали мой аккаунт (фото, тексты, шапку, описание). Уже некоторые рекомендации применила у себя».",attr:"Отзыв о консультации Гузель"}
   }
 };
 
@@ -471,10 +654,25 @@ function showResult(){
   document.getElementById('res-title').textContent=r.title;
   document.getElementById('res-sub').textContent=r.sub;
   document.getElementById('res-list').innerHTML=r.list.map(li=>`<li>${li}</li>`).join('');
-  document.getElementById('cta-title').innerHTML=r.ctaTitle;
-  document.getElementById('next-steps').innerHTML=r.steps.map(s=>`
-    <a href="${s.href}" ${s.href.startsWith('http')?'target="_blank" rel="noopener"':''} class="${s.primary?'btn-cta':'btn-cta'}" style="${s.primary?'':'background:none;border:1px solid var(--border2);color:var(--white);'}">${s.text}</a>
+  document.getElementById('case-intro').textContent=r.intro;
+  document.getElementById('case-section').innerHTML=r.case.map(c=>`
+    <div class="card case-card">
+      <div class="case-tag">${c.tag}</div>
+      ${c.big?`<div class="case-big">${c.big}</div><div class="case-caption">${c.caption}</div>`:''}
+      <div class="case-title">${c.title}</div>
+      <div class="case-text">${c.text.map(p=>`<p>${p}</p>`).join('')}</div>
+      ${c.stats?`<div class="case-stats">${c.stats.map(s=>`<div class="case-stat"><div class="case-stat-v">${s.v}</div><div class="case-stat-l">${s.l}</div></div>`).join('')}</div>`:''}
+      ${c.quote?`<div class="case-quote">${c.quote.text}${c.quote.attr?`<span class="case-quote-attr">${c.quote.attr}</span>`:''}</div>`:''}
+    </div>
   `).join('');
+  document.getElementById('cta-title').textContent=r.ctaTitle;
+  document.getElementById('cta-body').innerHTML=r.ctaBody.map(p=>`<p>${p}</p>`).join('');
+  const btn=document.getElementById('cta-btn');
+  btn.textContent=r.ctaBtn.text;
+  btn.href=r.ctaBtn.href;
+  if(r.ctaBtn.href.startsWith('http')){btn.target='_blank';btn.rel='noopener';}else{btn.removeAttribute('target');btn.removeAttribute('rel');}
+  document.getElementById('cta-quote').innerHTML=r.ctaQuote?`${r.ctaQuote.text}${r.ctaQuote.attr?`<span class="cta-quote-attr">${r.ctaQuote.attr}</span>`:''}`:'';
+  document.getElementById('cta-quote').style.display=r.ctaQuote?'':'none';
 }
 </script>
 </body>
