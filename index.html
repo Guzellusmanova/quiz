@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Тест: Какой формат блога тебе подходит? — Гузель Усманова</title>
+<title>Тест: Какой тип блога тебе подходит? — Гузель Усманова</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -250,6 +250,17 @@
 
   /* NEXT STEPS BUTTONS */
   .next-steps-card { margin-bottom:14px; animation:fadeUp 0.5s ease both; }
+  .guide-link { position:relative; display:flex; align-items:center; gap:14px; text-decoration:none; background:linear-gradient(135deg,var(--yellow),var(--yellow2)); color:var(--dark-on-accent); border-radius:16px; padding:18px 20px; margin-bottom:14px; overflow:hidden; animation:fadeUp 0.45s ease both, glowPulse 2.6s ease-in-out infinite; transition:transform .2s ease, box-shadow .2s ease; }
+  .guide-link:hover { transform:translateY(-2px) scale(1.01); box-shadow:0 12px 32px rgba(232,87,141,0.45); }
+  .guide-link::after { content:''; position:absolute; top:0; left:-60%; width:40%; height:100%; background:linear-gradient(115deg,transparent,rgba(255,255,255,0.55),transparent); transform:skewX(-20deg); animation:shine 3.2s ease-in-out infinite; }
+  .guide-link-badge { position:absolute; top:-8px; right:14px; background:var(--dark-on-accent); color:var(--yellow2); font-size:9px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; padding:4px 9px; border-radius:999px; box-shadow:0 2px 8px rgba(0,0,0,0.35); }
+  .guide-link-ico { font-size:26px; flex-shrink:0; }
+  .guide-link-txt { flex:1; min-width:0; }
+  .guide-link-tag { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; opacity:0.7; margin-bottom:4px; }
+  .guide-link-title { font-family:'Unbounded',sans-serif; font-weight:800; font-size:14px; line-height:1.35; }
+  .guide-link-arrow { font-size:20px; flex-shrink:0; }
+  @keyframes glowPulse { 0%,100% { box-shadow:0 6px 20px rgba(232,87,141,0.28); } 50% { box-shadow:0 8px 32px rgba(232,87,141,0.55); } }
+  @keyframes shine { 0% { left:-60%; } 45% { left:130%; } 100% { left:130%; } }
   .btn-cta-outline { background:transparent; color:var(--white); border:1px solid var(--border2); box-shadow:none; }
   .btn-cta-outline:hover { background:rgba(232,87,141,0.08); box-shadow:none; transform:none; }
   .format-panel { max-height:0; overflow:hidden; transition:max-height .4s ease; }
@@ -283,7 +294,7 @@
 <div class="container">
 
   <div class="top-bar">
-    <a href="https://www.instagram.com/usma.life?stkn=MWpneHE3a2V0Mmw2Zw==" target="_blank" rel="noopener" class="top-link ig"> usma.life</a>
+    <a href="https://www.instagram.com/usma.life?stkn=MWpneHE3a2V0Mmw2Zw==" target="_blank" rel="noopener" class="top-link ig">📷 usma.life</a>
   </div>
 
   <!-- START -->
@@ -336,6 +347,16 @@
       <div class="snap-label">Что тебе снимать</div>
       <ul class="snap-list" id="res-list"></ul>
     </div>
+
+    <a href="https://t.me/guzell_usmanova/363" target="_blank" rel="noopener" class="guide-link">
+      <div class="guide-link-badge">Бесплатно</div>
+      <div class="guide-link-ico">📖</div>
+      <div class="guide-link-txt">
+        <div class="guide-link-tag">Гайд от Гузель</div>
+        <div class="guide-link-title">Пошаговое руководство, как продвигать любой тип блога</div>
+      </div>
+      <div class="guide-link-arrow">→</div>
+    </a>
 
     <div class="card next-steps-card">
       <div class="cta-label">Как продолжить</div>
@@ -394,7 +415,7 @@
 
 <script>
 const Qs=[
-  {id:1,text:"Ты просыпаешься с мыслью, что хочешь снять ролик прямо сейчас. Что это скорее всего будет?",opts:[
+  {id:1,text:"Ты просыпаешься с мыслью, что хочешь снять ролик прямо сейчас. Что это скорее всего было?",opts:[
     {t:"Что-то произошло, и хочется рассказать об этом, поделиться реакцией, даже если это не несёт никакой пользы",v:"A"},
     {t:"Пришла идея, как объяснить что-то полезное, что давно крутилось в голове",v:"B"},
     {t:"Хочется рассказать историю из своей жизни, но так, чтобы из неё вышел конкретный вывод",v:"V"}
